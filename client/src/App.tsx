@@ -8,7 +8,7 @@ import { chat } from "./types/chat";
 
 function App() {
   const [chats, setChats] = useState<chat[]>([]);
-
+  
   const fetchChats = async () => {
     const res = await axios.get("/api/chat");
     setChats(res.data);
