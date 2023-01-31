@@ -1,15 +1,17 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const connectDB = require("./config/db")
 const chats = require("./data/data");
 
 const app = express();
 dotenv.config();
+connectDB();
 
 app.get("/", (req, res) => {
-  res.send("api is running");
+    res.send("api is running");
 });
 app.get("/api/chat", (req, res) => {
-  res.json(chats);
+    res.json(chats);
 });
 
 const PORT = process.env.PORT || 4000;
