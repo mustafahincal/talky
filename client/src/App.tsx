@@ -5,10 +5,11 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Chat from "./pages/Chat";
 import { chat } from "./types/chat";
+import "./App.css";
 
 function App() {
   const [chats, setChats] = useState<chat[]>([]);
-  
+
   const fetchChats = async () => {
     const res = await axios.get("/api/chat");
     setChats(res.data);
@@ -18,10 +19,11 @@ function App() {
   }, []);
   return (
     <div className="App">
-      <Routes>
+      <Home />
+      {/*  <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/chat" element={<Chat chats={chats} />} />
-      </Routes>
+      </Routes> */}
     </div>
   );
 }
