@@ -49,7 +49,27 @@ const accessChat = asyncHandler(async (req, res) => {
   }
 });
 
-const getChats = asyncHandler(async (req, res) => {});
+const getChats = asyncHandler(async (req, res) => {
+  try {
+    let chats = await Chat.find({
+      users: { $elemMatch: { $eq: req.user._id } },
+    })
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password")
+      .populate("latestMessage")
+      .sort("-updatedAt");
+
+    chats = await User.populate(chats, {
+      path: "latestMessage,sender",
+      select: "name img email",
+    });
+
+    res.status(200).json(chats);
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
+  }
+});
 
 const createGroupChat = asyncHandler(async (req, res) => {
   console.log("accessChat");
