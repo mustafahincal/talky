@@ -11,12 +11,11 @@ const { protect } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
-//* should add protect all of them for bearer token like router.route("/").get(protect,getChats);
-router.route("/").get(getChats);
-router.route("/").post(accessChat);
-router.route("/group").post(createGroupChat);
-router.route("/rename").put(renameGroup);
-router.route("/group-remove").put(removeFromGroup);
-router.route("/group-add").put(addToGroup);
+router.route("/").get(protect, getChats);
+router.route("/").post(protect, accessChat);
+router.route("/group").post(protect, createGroupChat);
+router.route("/rename").put(protect, renameGroup);
+router.route("/group-remove").put(protect, removeFromGroup);
+router.route("/group-add").put(protect, addToGroup);
 
 module.exports = router;
