@@ -1,8 +1,8 @@
-import { user } from "./user";
+import { User } from "./user";
 
-export type chat = {
+export type Chat = {
   isGroupChat: boolean;
-  users: user | user[];
+  users: User | User[];
   _id: string;
   chatName: string;
 };

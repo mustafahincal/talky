@@ -1,10 +1,10 @@
 import React from "react";
-import { chat } from "../types/chat";
+import { Chat } from "../types/chat";
 
 type chatProps = {
-  chats: chat[];
+  chats: Chat[];
 };
-const Chat = ({ chats }: chatProps) => {
+const ChatPage = ({ chats }: chatProps) => {
   return (
     <div>
       {chats.map((chat) => (
@@ -14,4 +14,4 @@ const Chat = ({ chats }: chatProps) => {
   );
 };
 
-export default Chat;
+export default ChatPage;
