@@ -1,5 +1,5 @@
-import Login from "../components/authentication/Login";
-import SignUp from "../components/authentication/SignUp";
+import Login from "../../components/authentication/Login";
+import SignUp from "../../components/authentication/SignUp";
 import { Button, Container, Tab, Tabs } from "react-bootstrap";
 
 const HomePage = () => {

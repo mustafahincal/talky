@@ -1,9 +1,10 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchLogin, fetchRegister } from "../services/authService";
 import { AuthContextType, LoginRequest, RegisterRequest } from "../types/auth";
 import { toast } from "react-toastify";
 import Loading from "../components/loading/Loading";
+import { User } from "../types/user";
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -14,7 +15,17 @@ type props = {
 export const AuthProvider: React.FC<props> = ({ children }) => {
   const [logged, setLogged] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [user, setUser] = useState<User>();
   const navigate: any = useNavigate();
+
+  useEffect(() => {
+    console.log(localStorage.getItem("token"));
+    if (localStorage.getItem("token")) {
+      setUser(JSON.parse(localStorage.getItem("userInfo") || "{}"));
+      setLogged(true);
+      navigate("/chat");
+    }
+  }, []);
 
   const register = (userForRegister: RegisterRequest) => {
     fetchRegister(userForRegister)
@@ -23,7 +34,7 @@ export const AuthProvider: React.FC<props> = ({ children }) => {
         navigate("/");
       })
       .catch((err: any) => {
-        toast.success("Failed To Register");
+        toast.error("Failed To Register");
         navigate("/");
       });
   };
@@ -31,7 +42,6 @@ export const AuthProvider: React.FC<props> = ({ children }) => {
     setLoading(true);
     fetchLogin(userForLogin)
       .then((response: any) => {
-        console.log(response);
         localStorage.setItem("token", response.token);
         localStorage.setItem(
           "userInfo",
