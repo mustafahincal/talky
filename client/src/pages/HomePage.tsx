@@ -4,8 +4,11 @@ import { Button, Container, Tab, Tabs } from "react-bootstrap";
 
 const HomePage = () => {
   return (
-    <div className="mt-5 d-flex justify-content-center align-items-center">
-      <Container className="w-50">
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{ height: "100vh" }}
+    >
+      <Container className="w-25">
         <Tabs
           defaultActiveKey="profile"
           id="fill-tab-example"
