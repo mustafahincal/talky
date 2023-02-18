@@ -1,8 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
 .App {
-  min-height: 100vh;
-  display: flex;
-  background-image: url("./bg.png");
+  background-image: url("./assets/bg.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

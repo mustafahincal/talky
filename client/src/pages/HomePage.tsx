@@ -8,11 +8,11 @@ const HomePage = () => {
       className="d-flex justify-content-center align-items-center"
       style={{ height: "100vh" }}
     >
-      <Container className="w-25">
+      <Container className="w-25 bg-light p-3">
         <Tabs
           defaultActiveKey="profile"
           id="fill-tab-example"
-          className="mb-3"
+          className="mb-3 "
           fill
         >
           <Tab eventKey="home" title="Login">

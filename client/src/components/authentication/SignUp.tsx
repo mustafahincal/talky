@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { useAuthContext } from "../../contexts/AuthContext";
 const SignUp = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -8,6 +9,8 @@ const SignUp = () => {
   const [image, setImage] = useState<string>("");
   const [show, setShow] = useState<boolean>(false);
 
+  const { register } = useAuthContext();
+
   const handleClickShow = () => {
     setShow((prev) => !prev);
   };
@@ -15,14 +18,14 @@ const SignUp = () => {
     console.log(img);
   };
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
-    console.log({ name, email, password, confirmPassword });
+    register({ name, email, password });
     e.preventDefault();
   };
 
   return (
     <>
-      <Form>
-        <Form.Group className="mb-3" controlId="formBasicName">
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3">
           <Form.Label>Name</Form.Label>
           <Form.Control
             value={name}
@@ -31,7 +34,7 @@ const SignUp = () => {
             placeholder="Enter name"
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3">
           <Form.Label>Email address</Form.Label>
           <Form.Control
             value={email}
@@ -44,7 +47,7 @@ const SignUp = () => {
           </Form.Text>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3">
           <Form.Label>Password</Form.Label>
           <Form.Control
             value={password}
@@ -53,7 +56,7 @@ const SignUp = () => {
             placeholder="Password"
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
+        <Form.Group className="mb-3">
           <Form.Label>Confirm Password</Form.Label>
           <Form.Control
             value={confirmPassword}
