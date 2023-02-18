@@ -3,17 +3,17 @@ export type AuthContextType = {
   setLogged: React.Dispatch<React.SetStateAction<boolean>>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  register: (userForRegister: Register) => void;
-  login: (userForLogin: Login) => void;
+  register: (userForRegister: RegisterRequest) => void;
+  login: (userForLogin: LoginRequest) => void;
 };
 
-export type Register = {
+export type RegisterRequest = {
   name: string;
   email: string;
   password: string;
 };
 
-export type Login = {
+export type LoginRequest = {
   email: string;
   password: string;
 };

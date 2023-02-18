@@ -15,10 +15,10 @@ const HomePage = () => {
           className="mb-3 "
           fill
         >
-          <Tab eventKey="home" title="Login">
+          <Tab eventKey="profile" title="Login">
             <Login />
           </Tab>
-          <Tab eventKey="profile" title="Signup">
+          <Tab eventKey="home" title="Signup">
             <SignUp />
           </Tab>
         </Tabs>

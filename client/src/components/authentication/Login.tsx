@@ -1,16 +1,26 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { useAuthContext } from "../../contexts/AuthContext";
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const { login } = useAuthContext();
+
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+    login({ email, password });
+    resetForm();
     e.preventDefault();
+  };
+
+  const resetForm = () => {
+    setEmail("");
+    setPassword("");
   };
 
   return (
     <>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
           <Form.Label>Email address</Form.Label>
           <Form.Control

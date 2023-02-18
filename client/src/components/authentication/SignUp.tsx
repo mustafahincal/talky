@@ -19,7 +19,15 @@ const SignUp = () => {
   };
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     register({ name, email, password });
+    resetForm();
     e.preventDefault();
+  };
+
+  const resetForm = () => {
+    setName("");
+    setConfirmPassword("");
+    setEmail("");
+    setPassword("");
   };
 
   return (

@@ -6,3 +6,8 @@ export type Chat = {
   _id: string;
   chatName: string;
 };
+
+export type ChatContextType = {
+  chats: Chat[];
+  setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
+};

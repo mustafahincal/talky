@@ -1,9 +1,9 @@
 import axios from "axios";
-import { Register, Login } from "../types/auth";
+import { RegisterRequest, LoginRequest } from "../types/auth";
 
 const url: string = process.env.REACT_APP_BASE_ENDPOINT + "/user";
 
-export const fetchRegister = (userForRegister: Register) => {
+export const fetchRegister = (userForRegister: RegisterRequest) => {
   return new Promise((resolve, reject) => {
     axios
       .post(url, userForRegister)
@@ -12,7 +12,7 @@ export const fetchRegister = (userForRegister: Register) => {
   });
 };
 
-export const fetchLogin = (userForLogin: Login) => {
+export const fetchLogin = (userForLogin: LoginRequest) => {
   return new Promise((resolve, reject) => {
     axios
       .post(url + "/login", userForLogin)

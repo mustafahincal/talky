@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchLogin, fetchRegister } from "../services/authService";
-import { AuthContextType, Register, Login } from "../types/auth";
+import { AuthContextType, LoginRequest, RegisterRequest } from "../types/auth";
 import { toast } from "react-toastify";
+import Loading from "../components/loading/Loading";
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -15,22 +16,40 @@ export const AuthProvider: React.FC<props> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate: any = useNavigate();
 
-  const register = (userForRegister: Register) => {
+  const register = (userForRegister: RegisterRequest) => {
     fetchRegister(userForRegister)
-      .then((result) => {
+      .then((response: any) => {
         toast.success("Registration Successful");
+        navigate("/");
       })
-      .catch((err) => {
+      .catch((err: any) => {
         toast.success("Failed To Register");
+        navigate("/");
       });
   };
-  const login = (userForLogin: Login) => {
+  const login = (userForLogin: LoginRequest) => {
+    setLoading(true);
     fetchLogin(userForLogin)
-      .then((result) => {
-        console.log(result);
+      .then((response: any) => {
+        console.log(response);
+        localStorage.setItem("token", response.token);
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({
+            id: response.id,
+            name: response.name,
+            email: response.email,
+            image: response.image,
+          })
+        );
+        setLogged(true);
+        setLoading(false);
+        toast.success("Login Successsful");
+        navigate("/chat");
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((err: any) => {
+        toast.error(err.response.data.message);
+        setLoading(false);
       });
   };
 

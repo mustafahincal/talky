@@ -1,17 +1,12 @@
 import React from "react";
+import { Container } from "react-bootstrap";
 import { Chat } from "../types/chat";
 
 type chatProps = {
   chats: Chat[];
 };
 const ChatPage = ({ chats }: chatProps) => {
-  return (
-    <div>
-      {chats.map((chat) => (
-        <div key={chat._id}> {chat.chatName} </div>
-      ))}
-    </div>
-  );
+  return <Container className="vh-100">chat page</Container>;
 };
 
 export default ChatPage;
