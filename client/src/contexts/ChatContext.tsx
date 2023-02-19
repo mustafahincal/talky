@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import {
   fetchAllChats,
   fetchAllMessagesByChatId,
@@ -19,8 +19,6 @@ export const ChatProvider: React.FC<props> = ({ children }) => {
   const [selectedChat, setSelectedChat] = useState<Chat>();
   const [messages, setMessages] = useState<Message[]>([]);
 
-  const { currentUser } = useAuthContext();
-
   const getAllChats = () => {
     fetchAllChats()
       .then((response: any) => {
@@ -29,14 +27,6 @@ export const ChatProvider: React.FC<props> = ({ children }) => {
       .catch((err: any) => {
         console.log(err);
       });
-  };
-
-  const getChatName = (chat: Chat) => {
-    if (chat.isGroupChat) {
-      return chat.chatName;
-    }
-    const user = chat.users.find((user: User) => user._id != currentUser?._id);
-    return user?.name;
   };
 
   const getAllMessagesByChatId = (chatId: number) => {
@@ -53,7 +43,6 @@ export const ChatProvider: React.FC<props> = ({ children }) => {
     chats,
     setChats,
     getAllChats,
-    getChatName,
     selectedChat,
     setSelectedChat,
     getAllMessagesByChatId,

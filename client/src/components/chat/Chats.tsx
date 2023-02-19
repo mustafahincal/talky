@@ -1,12 +1,24 @@
 import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
+import { useAuthContext } from "../../contexts/AuthContext";
 import { useChatContext } from "../../contexts/ChatContext";
+import { Chat } from "../../types/chat";
 
 const Chats = () => {
-  const { chats, getAllChats, getChatName, setSelectedChat } = useChatContext();
+  const { chats, getAllChats, setSelectedChat } = useChatContext();
+  const { currentUser } = useAuthContext();
   useEffect(() => {
     getAllChats();
   }, []);
+
+  const getChatName = (chat: Chat) => {
+    if (chat.isGroupChat) {
+      return chat.chatName;
+    }
+
+    const user = chat.users.find((user) => user._id != currentUser?._id);
+    return user?.name;
+  };
   return (
     <div
       className="rounded h-100 d-flex flex-column gap-3 p-3"

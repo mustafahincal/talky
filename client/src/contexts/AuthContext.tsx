@@ -51,6 +51,12 @@ export const AuthProvider: React.FC<props> = ({ children }) => {
             image: response.image,
           })
         );
+        setCurrentUser({
+          _id: response.id,
+          name: response.name,
+          email: response.email,
+          image: response.image,
+        });
         setLogged(true);
         setLoading(false);
         toast.success("Login Successsful");

@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import Loading from "./components/loading/Loading";
 import { useAuthContext } from "./contexts/AuthContext";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import { useChatContext } from "./contexts/ChatContext";
 
 function App() {
   const { loading } = useAuthContext();
