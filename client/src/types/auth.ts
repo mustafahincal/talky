@@ -1,4 +1,7 @@
+import { User } from "./user";
+
 export type AuthContextType = {
+  currentUser: User | undefined;
   logged: boolean;
   setLogged: React.Dispatch<React.SetStateAction<boolean>>;
   loading: boolean;

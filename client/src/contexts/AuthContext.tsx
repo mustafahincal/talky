@@ -15,13 +15,12 @@ type props = {
 export const AuthProvider: React.FC<props> = ({ children }) => {
   const [logged, setLogged] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [user, setUser] = useState<User>();
+  const [currentUser, setCurrentUser] = useState<User>();
   const navigate: any = useNavigate();
 
   useEffect(() => {
-    console.log(localStorage.getItem("token"));
     if (localStorage.getItem("token")) {
-      setUser(JSON.parse(localStorage.getItem("userInfo") || "{}"));
+      setCurrentUser(JSON.parse(localStorage.getItem("userInfo") || "{}"));
       setLogged(true);
       navigate("/chat");
     }
@@ -46,7 +45,7 @@ export const AuthProvider: React.FC<props> = ({ children }) => {
         localStorage.setItem(
           "userInfo",
           JSON.stringify({
-            id: response.id,
+            _id: response.id,
             name: response.name,
             email: response.email,
             image: response.image,
@@ -70,6 +69,7 @@ export const AuthProvider: React.FC<props> = ({ children }) => {
     setLoading,
     register,
     login,
+    currentUser,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
