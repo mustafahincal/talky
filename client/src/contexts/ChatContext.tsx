@@ -1,8 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import {
-  fetchAllChats,
-  fetchAllMessagesByChatId,
-} from "../services/chatService";
+import { fetchAllChats } from "../services/chatService";
+import { fetchAllMessagesByChatId } from "../services/messageService";
 import { Chat, ChatContextType } from "../types/chat";
 import { Message } from "../types/message";
 import { User } from "../types/user";
@@ -18,7 +16,6 @@ export const ChatProvider: React.FC<props> = ({ children }) => {
   const [chats, setChats] = useState<Chat[]>([]);
   const [selectedChat, setSelectedChat] = useState<Chat>();
   const [messages, setMessages] = useState<Message[]>([]);
-
   const getAllChats = () => {
     fetchAllChats()
       .then((response: any) => {
@@ -29,10 +26,11 @@ export const ChatProvider: React.FC<props> = ({ children }) => {
       });
   };
 
-  const getAllMessagesByChatId = (chatId: number) => {
+  const getAllMessagesByChatId = (chatId: string) => {
     fetchAllMessagesByChatId(chatId)
-      .then((response) => {
+      .then((response: any) => {
         console.log(response);
+        setMessages(response);
       })
       .catch((err) => {
         console.log(err);

@@ -19,6 +19,7 @@ const Chats = () => {
     const user = chat.users.find((user) => user._id != currentUser?._id);
     return user?.name;
   };
+
   return (
     <div
       className="rounded h-100 d-flex flex-column gap-3 p-3"
