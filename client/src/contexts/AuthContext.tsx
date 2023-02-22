@@ -15,7 +15,7 @@ type props = {
 export const AuthProvider: React.FC<props> = ({ children }) => {
   const [logged, setLogged] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [currentUser, setCurrentUser] = useState<User>();
+  const [currentUser, setCurrentUser] = useState<User | undefined>();
   const navigate: any = useNavigate();
 
   useEffect(() => {
@@ -68,6 +68,14 @@ export const AuthProvider: React.FC<props> = ({ children }) => {
       });
   };
 
+  const logout = () => {
+    setLogged(false);
+    setCurrentUser(undefined);
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   const values: AuthContextType = {
     logged,
     setLogged,
@@ -76,6 +84,7 @@ export const AuthProvider: React.FC<props> = ({ children }) => {
     register,
     login,
     currentUser,
+    logout,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

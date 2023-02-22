@@ -8,6 +8,7 @@ export type AuthContextType = {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   register: (userForRegister: RegisterRequest) => void;
   login: (userForLogin: LoginRequest) => void;
+  logout: () => void;
 };
 
 export type RegisterRequest = {
