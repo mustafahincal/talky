@@ -5,4 +5,12 @@
   background-size: cover;
   background-position: center;
   font-family: "Poppins", sans-serif;
+  height: 100vh;
+}
+
+.chat-container {
+  height: 500px;
+}
+.chat-messages {
+  height: 100%;
 }

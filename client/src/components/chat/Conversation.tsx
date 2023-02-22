@@ -46,8 +46,8 @@ const Conversation = () => {
           {getChatName(selectedChat) || "Select a Chat"}
         </h2>
         {selectedChat ? (
-          <div className="h-100 d-flex flex-column justify-content-between overflow-scroll">
-            <div className="d-flex flex-column  ">
+          <div className="chat-container d-flex flex-column justify-content-between ">
+            <div className="d-flex flex-column  overflow-auto chat-messages">
               {messages.map((message) => (
                 <div
                   className={` mb-2 d-flex align-items-center gap-2 ${
@@ -64,7 +64,7 @@ const Conversation = () => {
                 </div>
               ))}
             </div>
-            <div className="d-flex">
+            <div className="d-flex mt-3 chat-input">
               <Form.Control
                 type="email"
                 placeholder="Enter Message"
@@ -72,7 +72,7 @@ const Conversation = () => {
                 onChange={(e) => setNewMessage(e.target.value)}
               />
               <Button variant="primary" type="submit" onClick={sendNewMessage}>
-                Submit
+                Send
               </Button>
             </div>
           </div>

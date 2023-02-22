@@ -5,6 +5,7 @@ import Conversation from "../../components/chat/Conversation";
 import Chats from "../../components/chat/Chats";
 import { Chat } from "../../types/chat";
 import Header from "../../components/chat/Header";
+import Footer from "../../components/chat/Footer";
 
 const ChatPage = () => {
   const navigate = useNavigate();
@@ -12,10 +13,10 @@ const ChatPage = () => {
     navigate("/");
   };
   return (
-    <div className="vh-100 d-flex flex-column pb-4">
+    <div className="h-100 d-flex flex-column justify-content-between">
       <Header />
-      <Container className="h-100">
-        <Row className="h-100 gap-3">
+      <Container>
+        <Row className="gap-3">
           <Col xs lg="3">
             <Chats />
           </Col>
@@ -24,6 +25,7 @@ const ChatPage = () => {
           </Col>
         </Row>
       </Container>
+      <Footer />
     </div>
   );
 };
