@@ -1,8 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { fetchAllChats } from "../services/chatService";
-import { fetchAllMessagesByChatId } from "../services/messageService";
+import {
+  fetchAllMessagesByChatId,
+  fetchSendMessage,
+} from "../services/messageService";
 import { Chat, ChatContextType } from "../types/chat";
-import { Message } from "../types/message";
+import { Message, SendMessageRequest } from "../types/message";
 import { User } from "../types/user";
 import { useAuthContext } from "./AuthContext";
 
@@ -16,6 +19,7 @@ export const ChatProvider: React.FC<props> = ({ children }) => {
   const [chats, setChats] = useState<Chat[]>([]);
   const [selectedChat, setSelectedChat] = useState<Chat>();
   const [messages, setMessages] = useState<Message[]>([]);
+
   const getAllChats = () => {
     fetchAllChats()
       .then((response: any) => {
@@ -29,11 +33,20 @@ export const ChatProvider: React.FC<props> = ({ children }) => {
   const getAllMessagesByChatId = (chatId: string) => {
     fetchAllMessagesByChatId(chatId)
       .then((response: any) => {
-        console.log(response);
         setMessages(response);
       })
       .catch((err) => {
         console.log(err);
+      });
+  };
+
+  const sendMessage = (data: SendMessageRequest) => {
+    fetchSendMessage(data)
+      .then((response) => {
+        //console.log(response);
+      })
+      .catch((err) => {
+        //console.log(err);
       });
   };
 
@@ -45,6 +58,7 @@ export const ChatProvider: React.FC<props> = ({ children }) => {
     setSelectedChat,
     getAllMessagesByChatId,
     messages,
+    sendMessage,
   };
 
   return <ChatContext.Provider value={values}>{children}</ChatContext.Provider>;

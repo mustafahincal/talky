@@ -1,4 +1,4 @@
-import { Message } from "./message";
+import { Message, SendMessageRequest } from "./message";
 import { User } from "./user";
 
 export type Chat = {
@@ -16,4 +16,5 @@ export type ChatContextType = {
   messages: Message[];
   getAllChats: () => void;
   getAllMessagesByChatId: (chatId: string) => void;
+  sendMessage: (data: SendMessageRequest) => void;
 };

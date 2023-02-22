@@ -7,3 +7,8 @@ export type Message = {
   chat: Chat;
   content: string;
 };
+
+export type SendMessageRequest = {
+  chatId?: string;
+  content: string;
+};
