@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useAuthContext } from "../../contexts/AuthContext";
+interface HTMLInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
+}
+
 const SignUp = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [image, setImage] = useState<string>("");
+  const [file, setFile] = useState<File>();
   const [show, setShow] = useState<boolean>(false);
 
   const { register } = useAuthContext();
@@ -14,11 +18,19 @@ const SignUp = () => {
   const handleClickShow = () => {
     setShow((prev) => !prev);
   };
-  const handleUploadImage = (img: File | null) => {
-    console.log(img);
+
+  const handleUploadImage = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    const fileToSet: File = (target.files as FileList)[0];
+    setFile(fileToSet);
   };
+
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
-    register({ name, email, password });
+    const formData: any = new FormData();
+    formData.append("file", file);
+    formData.append("registerBody", JSON.stringify({ name, email, password }));
+    register(formData);
+    //register({ name, email, password });
     resetForm();
     e.preventDefault();
   };
@@ -73,6 +85,15 @@ const SignUp = () => {
             placeholder="Confirm Password"
           />
         </Form.Group>
+
+        <Form.Group controlId="formFile" className="mb-3">
+          <Form.Label>Image</Form.Label>
+          <Form.Control
+            type="file"
+            onChange={(e: any) => handleUploadImage(e)}
+          />
+        </Form.Group>
+
         <Button variant="primary" type="submit">
           Submit
         </Button>

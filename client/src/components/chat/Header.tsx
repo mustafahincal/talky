@@ -13,13 +13,19 @@ import { useAuthContext } from "../../contexts/AuthContext";
 
 const Header = () => {
   const { logout, currentUser } = useAuthContext();
+
   return (
     <>
       <Navbar key={"sm"} bg="light" expand={"sm"} className="mb-3">
         <Container>
           <Navbar.Brand href="#">Chat App</Navbar.Brand>
           <div className="mx-3 bg-danger d-flex align-items-center gap-2  py-2 px-2 rounded text-white">
-            <img src={currentUser?.image} width="30px" height="30px" alt="" />
+            <img
+              src={`${process.env.REACT_APP_PUBLIC}${currentUser?.image}`}
+              width="30px"
+              height="30px"
+              alt=""
+            />
             <div>{currentUser?.name}</div>
           </div>
           <Navbar.Offcanvas

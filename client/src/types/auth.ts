@@ -12,9 +12,7 @@ export type AuthContextType = {
 };
 
 export type RegisterRequest = {
-  name: string;
-  email: string;
-  password: string;
+  formData: FormData;
 };
 
 export type LoginRequest = {

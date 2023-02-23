@@ -57,7 +57,7 @@ const Conversation = () => {
                     key={message._id}
                   >
                     <img
-                      src={currentUser?.image}
+                      src={`${process.env.REACT_APP_PUBLIC}${currentUser?.image}`}
                       alt=""
                       width={"30px"}
                       height={"30px"}

@@ -33,6 +33,7 @@ export const AuthProvider: React.FC<props> = ({ children }) => {
         navigate("/");
       })
       .catch((err: any) => {
+        console.log(err);
         toast.error("Failed To Register");
         navigate("/");
       });
