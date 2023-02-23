@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const fileUpload = require("express-fileupload");
 const connectDB = require("./config/db");
 const chats = require("./data/data");
 const userRouter = require("./routers/userRouter");
@@ -15,6 +16,8 @@ dotenv.config();
 connectDB();
 
 //* middlewares
+app.use(express.static("public"));
+app.use(fileUpload());
 app.use(cors());
 app.use(express.json());
 
