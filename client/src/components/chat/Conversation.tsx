@@ -56,9 +56,12 @@ const Conversation = () => {
                     }`}
                     key={message._id}
                   >
-                    <span className="text-white bg-danger p-1 rounded text-sm">
-                      {message.sender.name}
-                    </span>
+                    <img
+                      src={currentUser?.image}
+                      alt=""
+                      width={"30px"}
+                      height={"30px"}
+                    />
                     <span className="bg-white p-1 rounded align-self-start">
                       {message.content}
                     </span>

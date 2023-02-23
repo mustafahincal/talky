@@ -12,13 +12,16 @@ import logoutIcon from "../../assets/logout.svg";
 import { useAuthContext } from "../../contexts/AuthContext";
 
 const Header = () => {
-  const { logout } = useAuthContext();
+  const { logout, currentUser } = useAuthContext();
   return (
     <>
       <Navbar key={"sm"} bg="light" expand={"sm"} className="mb-3">
         <Container>
           <Navbar.Brand href="#">Chat App</Navbar.Brand>
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
+          <div className="mx-3 bg-danger d-flex align-items-center gap-2  py-2 px-2 rounded text-white">
+            <img src={currentUser?.image} width="30px" height="30px" alt="" />
+            <div>{currentUser?.name}</div>
+          </div>
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-sm`}
             aria-labelledby={`offcanvasNavbarLabel-expand-sm`}
