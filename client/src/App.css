@@ -10,6 +10,8 @@
 
 .chat-container {
   height: 500px;
+  display: flex;
+  width: 100%;
 }
 .chat-messages {
   height: 100%;

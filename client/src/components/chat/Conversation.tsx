@@ -45,38 +45,44 @@ const Conversation = () => {
         <h2 className="px-1 py-2 mb-4 bg-dark text-white d-flex justify-content-center align-items-center">
           {getChatName(selectedChat) || "Select a Chat"}
         </h2>
-        {selectedChat ? (
-          <div className="chat-container d-flex flex-column justify-content-between ">
-            <div className="d-flex flex-column  overflow-auto chat-messages">
-              {messages.map((message) => (
-                <div
-                  className={` mb-2 d-flex align-items-center gap-2 ${
-                    isSender(message) && "justify-content-end"
-                  }`}
-                  key={message._id}
+        <div className="chat-container">
+          {selectedChat ? (
+            <div className="d-flex flex-column justify-content-between w-100">
+              <div className="d-flex flex-column  overflow-auto chat-messages">
+                {messages.map((message) => (
+                  <div
+                    className={` mb-2 d-flex align-items-center gap-2 ${
+                      isSender(message) && "justify-content-end"
+                    }`}
+                    key={message._id}
+                  >
+                    <span className="text-white bg-danger p-1 rounded text-sm">
+                      {message.sender.name}
+                    </span>
+                    <span className="bg-white p-1 rounded align-self-start">
+                      {message.content}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className="d-flex mt-3 chat-input">
+                <Form.Control
+                  type="email"
+                  placeholder="Enter Message"
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                />
+                <Button
+                  variant="primary"
+                  type="submit"
+                  onClick={sendNewMessage}
                 >
-                  <span className="text-white bg-danger p-1 rounded text-sm">
-                    {message.sender.name}
-                  </span>
-                  <span className="bg-white p-1 rounded align-self-start">
-                    {message.content}
-                  </span>
-                </div>
-              ))}
+                  Send
+                </Button>
+              </div>
             </div>
-            <div className="d-flex mt-3 chat-input">
-              <Form.Control
-                type="email"
-                placeholder="Enter Message"
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-              />
-              <Button variant="primary" type="submit" onClick={sendNewMessage}>
-                Send
-              </Button>
-            </div>
-          </div>
-        ) : null}
+          ) : null}
+        </div>
       </div>
     </div>
   );
