@@ -8,4 +8,5 @@ export type User = {
 export type UserContextType = {
   users: User[];
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
+  getAllUsers: () => void;
 };

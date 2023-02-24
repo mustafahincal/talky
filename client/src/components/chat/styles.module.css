@@ -4,8 +4,19 @@
   text-align: center;
 }
 .dropdownItemsContainer {
-  padding: 10px 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+}
+.dropdownItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.dropdownItem:hover {
+  background-color: #caf0f8;
+}
+.dropdownSearch {
+  padding: 10px 20px;
 }

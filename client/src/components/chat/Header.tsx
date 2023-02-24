@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Container,
   Nav,
@@ -10,12 +10,19 @@ import {
 } from "react-bootstrap";
 import logoutIcon from "../../assets/logout.svg";
 import { useAuthContext } from "../../contexts/AuthContext";
-import { useChatContext } from "../../contexts/ChatContext";
+import { useUserContext } from "../../contexts/UserContext";
 import styles from "./styles.module.css";
+import chatSvg from "../../assets/chat.svg";
 
 const Header = () => {
   const { logout, currentUser } = useAuthContext();
-  const {} = useChatContext();
+  const { users, getAllUsers } = useUserContext();
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
+  const handleClickChat = (userId: string) => {};
 
   return (
     <>
@@ -49,13 +56,22 @@ const Header = () => {
                   className={styles.headerDropdownContainer}
                 >
                   <div className={styles.dropdownItemsContainer}>
-                    <div>
+                    <div className={styles.dropdownSearch}>
                       <div className="d-flex">
                         <input type="text" placeholder="Search" />
                         <Button variant="outline-success">Search</Button>
                       </div>
                     </div>
-                    <div className={styles.dropdownItem}>Another action</div>
+                    {users.map((user) => (
+                      <div
+                        onClick={() => handleClickChat(user._id)}
+                        key={user._id}
+                        className={styles.dropdownItem}
+                      >
+                        <span>{user.name}</span>
+                        <img src={chatSvg} alt="" />
+                      </div>
+                    ))}
                   </div>
                 </NavDropdown>
 
