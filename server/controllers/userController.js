@@ -69,6 +69,16 @@ const authUser = asyncHandler(async (req, res) => {
 });
 
 const getAll = asyncHandler(async (req, res) => {
+  const users = await User.find();
+  if (users) {
+    res.status(200).json(users);
+  } else {
+    res.status(400);
+    throw new Error("Something is wrong");
+  }
+});
+
+const getUsersByQuery = asyncHandler(async (req, res) => {
   const keyword = req.query.search
     ? {
         $or: [
@@ -86,4 +96,4 @@ const getAll = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { register, authUser, getAll };
+module.exports = { register, authUser, getAll, getUsersByQuery };
