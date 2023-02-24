@@ -25,16 +25,22 @@ const Chats = () => {
       className="rounded h-100 d-flex flex-column gap-3 p-3"
       style={{ background: "#89C4E1" }}
     >
-      {chats.map((chat) => (
-        <div
-          onClick={() => setSelectedChat(chat)}
-          className="p-3 rounded cursor-pointer"
-          style={{ background: "#CAF0F8" }}
-          key={chat._id}
-        >
-          <span>{getChatName(chat)}</span>
+      {chats.length > 0 ? (
+        chats.map((chat) => (
+          <div
+            onClick={() => setSelectedChat(chat)}
+            className="p-3 rounded cursor-pointer"
+            style={{ background: "#CAF0F8" }}
+            key={chat._id}
+          >
+            <span>{getChatName(chat)}</span>
+          </div>
+        ))
+      ) : (
+        <div className="p-3 rounded text-center bg-dark text-light">
+          <span>Start Talking</span>
         </div>
-      ))}
+      )}
     </div>
   );
 };

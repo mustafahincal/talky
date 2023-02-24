@@ -1,0 +1,11 @@
+.headerDropdownContainer {
+  width: 500px;
+  border: 1px solid red;
+  text-align: center;
+}
+.dropdownItemsContainer {
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

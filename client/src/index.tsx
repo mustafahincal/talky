@@ -7,6 +7,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ChatProvider } from "./contexts/ChatContext";
+import { UserProvider } from "./contexts/UserContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,7 +16,9 @@ root.render(
   <BrowserRouter>
     <AuthProvider>
       <ChatProvider>
-        <App />
+        <UserProvider>
+          <App />
+        </UserProvider>
       </ChatProvider>
     </AuthProvider>
   </BrowserRouter>

@@ -4,3 +4,8 @@ export type User = {
   email: string;
   image: string;
 };
+
+export type UserContextType = {
+  users: User[];
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>;
+};

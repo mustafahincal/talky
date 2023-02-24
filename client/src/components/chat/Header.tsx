@@ -10,9 +10,12 @@ import {
 } from "react-bootstrap";
 import logoutIcon from "../../assets/logout.svg";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { useChatContext } from "../../contexts/ChatContext";
+import styles from "./styles.module.css";
 
 const Header = () => {
   const { logout, currentUser } = useAuthContext();
+  const {} = useChatContext();
 
   return (
     <>
@@ -39,35 +42,29 @@ const Header = () => {
               </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-              <Nav className="justify-content-end flex-grow-1 pe-3">
+              <Nav className="justify-content-end align-items-center flex-grow-1 pe-3 gap-5">
+                <NavDropdown
+                  title="Users"
+                  id={`offcanvasNavbarDropdown-expand-sm`}
+                  className={styles.headerDropdownContainer}
+                >
+                  <div className={styles.dropdownItemsContainer}>
+                    <div>
+                      <div className="d-flex">
+                        <input type="text" placeholder="Search" />
+                        <Button variant="outline-success">Search</Button>
+                      </div>
+                    </div>
+                    <div className={styles.dropdownItem}>Another action</div>
+                  </div>
+                </NavDropdown>
+
                 <button onClick={logout}>
                   <Nav.Link href="#action2">
                     <img src={logoutIcon} alt="" />
                   </Nav.Link>
                 </button>
-                <NavDropdown
-                  title="Dropdown"
-                  id={`offcanvasNavbarDropdown-expand-sm`}
-                >
-                  <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action4">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action5">
-                    Something else here
-                  </NavDropdown.Item>
-                </NavDropdown>
               </Nav>
-              <Form className="d-flex">
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="me-2"
-                  aria-label="Search"
-                />
-                <Button variant="outline-success">Search</Button>
-              </Form>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>
