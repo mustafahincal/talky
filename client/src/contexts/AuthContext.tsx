@@ -42,7 +42,6 @@ export const AuthProvider: React.FC<props> = ({ children }) => {
     setLoading(true);
     fetchLogin(userForLogin)
       .then((response: any) => {
-        console.log(response);
         localStorage.setItem("token", response.token);
         localStorage.setItem(
           "userInfo",
