@@ -17,18 +17,24 @@ export const UserProvider: React.FC<props> = ({ children }) => {
     fetchAllUsers()
       .then((response: any) => {
         setUsers(response);
+        setFilteredUsers(response);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const getFilteredUsers = () => {};
+  const getFilteredUsers = (search: string) => {
+    const filteredUsers = users.filter((user) => {
+      return user.name.toLowerCase().startsWith(search.toLowerCase());
+    });
+    setFilteredUsers(filteredUsers);
+  };
 
   const values: UserContextType = {
-    users,
-    setUsers,
     getAllUsers,
+    filteredUsers,
+    getFilteredUsers,
   };
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;

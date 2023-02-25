@@ -69,7 +69,7 @@ const authUser = asyncHandler(async (req, res) => {
 });
 
 const getAll = asyncHandler(async (req, res) => {
-  const users = await User.find();
+  const users = await User.find().find({ _id: { $ne: req.user._id } });
   if (users) {
     res.status(200).json(users);
   } else {

@@ -7,6 +7,7 @@ import { Chat } from "../../types/chat";
 const Chats = () => {
   const { chats, getAllChats, setSelectedChat } = useChatContext();
   const { currentUser } = useAuthContext();
+
   useEffect(() => {
     getAllChats();
   }, []);

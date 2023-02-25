@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Nav,
@@ -13,16 +13,25 @@ import { useAuthContext } from "../../contexts/AuthContext";
 import { useUserContext } from "../../contexts/UserContext";
 import styles from "./styles.module.css";
 import chatSvg from "../../assets/chat.svg";
+import { useChatContext } from "../../contexts/ChatContext";
 
 const Header = () => {
   const { logout, currentUser } = useAuthContext();
-  const { users, getAllUsers } = useUserContext();
+  const { filteredUsers, getAllUsers, getFilteredUsers } = useUserContext();
+  const { accessChat } = useChatContext();
+  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
     getAllUsers();
   }, []);
 
-  const handleClickChat = (userId: string) => {};
+  const handleClickChat = (userId: string) => {
+    accessChat(userId);
+  };
+
+  const handleClickSearch = () => {
+    getFilteredUsers(search);
+  };
 
   return (
     <>
@@ -58,11 +67,21 @@ const Header = () => {
                   <div className={styles.dropdownItemsContainer}>
                     <div className={styles.dropdownSearch}>
                       <div className="d-flex">
-                        <input type="text" placeholder="Search" />
-                        <Button variant="outline-success">Search</Button>
+                        <input
+                          value={search}
+                          onChange={(e) => setSearch(e.target.value)}
+                          type="text"
+                          placeholder="Search"
+                        />
+                        <Button
+                          onClick={handleClickSearch}
+                          variant="outline-success"
+                        >
+                          Search
+                        </Button>
                       </div>
                     </div>
-                    {users.map((user) => (
+                    {filteredUsers.map((user) => (
                       <div
                         onClick={() => handleClickChat(user._id)}
                         key={user._id}

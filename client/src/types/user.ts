@@ -6,7 +6,7 @@ export type User = {
 };
 
 export type UserContextType = {
-  users: User[];
-  setUsers: React.Dispatch<React.SetStateAction<User[]>>;
+  filteredUsers: User[];
   getAllUsers: () => void;
+  getFilteredUsers: (search: string) => void;
 };

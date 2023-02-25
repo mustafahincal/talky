@@ -17,4 +17,5 @@ export type ChatContextType = {
   getAllChats: () => void;
   getAllMessagesByChatId: (chatId: string) => void;
   sendMessage: (data: SendMessageRequest) => void;
+  accessChat: (userId: string) => void;
 };

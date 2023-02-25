@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { fetchAllChats } from "../services/chatService";
+import { fetchAccessChats, fetchAllChats } from "../services/chatService";
 import {
   fetchAllMessagesByChatId,
   fetchSendMessage,
@@ -50,6 +50,17 @@ export const ChatProvider: React.FC<props> = ({ children }) => {
       });
   };
 
+  const accessChat = (userId: string) => {
+    fetchAccessChats(userId)
+      .then((response) => {
+        console.log(response);
+        getAllChats();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const values: ChatContextType = {
     chats,
     setChats,
@@ -59,6 +70,7 @@ export const ChatProvider: React.FC<props> = ({ children }) => {
     getAllMessagesByChatId,
     messages,
     sendMessage,
+    accessChat,
   };
 
   return <ChatContext.Provider value={values}>{children}</ChatContext.Provider>;
