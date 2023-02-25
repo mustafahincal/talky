@@ -52,9 +52,9 @@ export const ChatProvider: React.FC<props> = ({ children }) => {
 
   const accessChat = (userId: string) => {
     fetchAccessChats(userId)
-      .then((response) => {
-        console.log(response);
+      .then((response: any) => {
         getAllChats();
+        setSelectedChat(response);
       })
       .catch((err) => {
         console.log(err);

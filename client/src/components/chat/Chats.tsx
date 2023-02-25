@@ -5,7 +5,8 @@ import { useChatContext } from "../../contexts/ChatContext";
 import { Chat } from "../../types/chat";
 
 const Chats = () => {
-  const { chats, getAllChats, setSelectedChat } = useChatContext();
+  const { chats, getAllChats, setSelectedChat, selectedChat } =
+    useChatContext();
   const { currentUser } = useAuthContext();
 
   useEffect(() => {
@@ -30,7 +31,9 @@ const Chats = () => {
         chats.map((chat) => (
           <div
             onClick={() => setSelectedChat(chat)}
-            className="p-3 rounded cursor-pointer"
+            className={` p-3 rounded cursor-pointer ${
+              selectedChat?._id === chat._id && "bg-dark text-light"
+            }`}
             style={{ background: "#CAF0F8" }}
             key={chat._id}
           >
