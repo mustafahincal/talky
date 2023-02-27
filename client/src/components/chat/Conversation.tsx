@@ -1,27 +1,68 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
+import { io } from "socket.io-client";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useChatContext } from "../../contexts/ChatContext";
 import { Chat } from "../../types/chat";
 import { Message } from "../../types/message";
 
+const ENDPOINT = "http://localhost:4000";
+let socket: any, selectedChatCompare: Chat;
+socket = io(ENDPOINT);
+
 const Conversation = () => {
-  const { selectedChat, getAllMessagesByChatId, messages, sendMessage } =
-    useChatContext();
+  const {
+    selectedChat,
+    getAllMessagesByChatId,
+    messages,
+    setMessages,
+    sendMessage,
+  } = useChatContext();
   const { currentUser } = useAuthContext();
   const [newMessage, setNewMessage] = useState<string>("");
+  const [socketConnected, setSocketConnected] = useState<boolean>(false);
 
   useEffect(() => {
     if (selectedChat?._id) {
       getAllMessagesByChatId(selectedChat._id);
+
+      socket.emit("join-chat", selectedChat._id);
+
+      selectedChatCompare = selectedChat;
     }
   }, [selectedChat]);
 
-  const sendNewMessage = () => {
-    sendMessage({ chatId: selectedChat?._id, content: newMessage });
-    setNewMessage("");
+  useEffect(() => {
+    socket.emit("setup", currentUser);
+    socket.on("connected", () => setSocketConnected(true));
+  }, []);
+
+  const test = () => {
+    console.log(messages);
   };
 
+  useEffect(() => {
+    socket.on("message-received", (newMessage: any) => {
+      console.log("hey");
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessage.chat._id
+      ) {
+        console.log("give notification");
+      } else {
+        getAllMessagesByChatId(newMessage.chat._id);
+      }
+    });
+  }, [socket]);
+
+  const sendNewMessage = async () => {
+    const data = await sendMessage({
+      chatId: selectedChat?._id,
+      content: newMessage,
+    });
+    setNewMessage("");
+    socket.emit("new-message", data);
+  };
   const getChatName = (chat: Chat | undefined) => {
     if (chat?.isGroupChat) {
       return chat.chatName;
@@ -30,7 +71,6 @@ const Conversation = () => {
     const user = chat?.users.find((user) => user._id != currentUser?._id);
     return user?.name;
   };
-
   const isSender = (message: Message): boolean => {
     return currentUser?._id === message.sender._id;
   };
@@ -49,12 +89,12 @@ const Conversation = () => {
           {selectedChat ? (
             <div className="d-flex flex-column justify-content-between w-100">
               <div className="d-flex flex-column  overflow-auto chat-messages">
-                {messages.map((message) => (
+                {messages.map((message, index) => (
                   <div
                     className={` mb-2 d-flex align-items-center gap-2 ${
                       isSender(message) && "justify-content-end"
                     }`}
-                    key={message._id}
+                    key={index}
                   >
                     <img
                       src={`${process.env.REACT_APP_PUBLIC}${currentUser?.image}`}
@@ -67,6 +107,7 @@ const Conversation = () => {
                     </span>
                   </div>
                 ))}
+                <button onClick={test}>test</button>
               </div>
               <div className="d-flex mt-3 chat-input">
                 <Form.Control

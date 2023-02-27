@@ -14,6 +14,7 @@ export type ChatContextType = {
   selectedChat: Chat | undefined;
   setSelectedChat: React.Dispatch<React.SetStateAction<Chat | undefined>>;
   messages: Message[];
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
   getAllChats: () => void;
   getAllMessagesByChatId: (chatId: string) => void;
   sendMessage: (data: SendMessageRequest) => void;

@@ -41,13 +41,7 @@ export const ChatProvider: React.FC<props> = ({ children }) => {
   };
 
   const sendMessage = (data: SendMessageRequest) => {
-    fetchSendMessage(data)
-      .then((response) => {
-        //console.log(response);
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
+    return fetchSendMessage(data);
   };
 
   const accessChat = (userId: string) => {
@@ -69,6 +63,7 @@ export const ChatProvider: React.FC<props> = ({ children }) => {
     setSelectedChat,
     getAllMessagesByChatId,
     messages,
+    setMessages,
     sendMessage,
     accessChat,
   };
