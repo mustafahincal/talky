@@ -22,7 +22,7 @@
 }
 .message {
   display: block;
-  width: 45%;
+  max-width: 45%;
   word-wrap: break-word;
   color: white;
   border-radius: 5px;
