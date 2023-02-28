@@ -63,4 +63,15 @@ const getAllMessagesByChatId = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { sendMessage, getAllMessages, getAllMessagesByChatId };
+const deleteAllMessages = asyncHandler(async (req, res) => {
+  // test route
+  await Message.deleteMany();
+  res.send("succesfull");
+});
+
+module.exports = {
+  sendMessage,
+  getAllMessages,
+  getAllMessagesByChatId,
+  deleteAllMessages,
+};

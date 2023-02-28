@@ -37,10 +37,6 @@ const Conversation = () => {
     socket.on("connected", () => setSocketConnected(true));
   }, []);
 
-  const test = () => {
-    console.log(messages);
-  };
-
   useEffect(() => {
     socket.on("message-received", (newMessage: any) => {
       console.log("hey");
@@ -107,7 +103,6 @@ const Conversation = () => {
                     </span>
                   </div>
                 ))}
-                <button onClick={test}>test</button>
               </div>
               <div className="d-flex mt-3 chat-input">
                 <Form.Control
