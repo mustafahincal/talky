@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import { io } from "socket.io-client";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useChatContext } from "../../contexts/ChatContext";
@@ -114,7 +114,7 @@ const Conversation = () => {
               <div className="d-flex flex-column  overflow-auto chat-messages">
                 {messages.map((message, index) => (
                   <div
-                    className={`mb-2 d-flex align-items-center gap-2 ${
+                    className={`mb-2 d-flex align-items-center flex-row gap-2 ${
                       isSender(message) && "justify-content-end"
                     }`}
                     key={index}
@@ -124,10 +124,13 @@ const Conversation = () => {
                       alt=""
                       width={"30px"}
                       height={"30px"}
+                      className="order-2"
                     />
                     <span
                       className={`${styles.message} ${
-                        isSender(message) ? "bg-success" : "bg-info"
+                        isSender(message)
+                          ? "bg-success order-1"
+                          : "bg-info order-3"
                       }`}
                     >
                       {message.content}
