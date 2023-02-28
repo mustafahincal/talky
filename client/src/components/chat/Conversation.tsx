@@ -22,6 +22,8 @@ const Conversation = () => {
   const { currentUser } = useAuthContext();
   const [newMessage, setNewMessage] = useState<string>("");
   const [socketConnected, setSocketConnected] = useState<boolean>(false);
+  const [typing, setTyping] = useState<boolean>(false);
+  const [isTyping, setIsTyping] = useState<boolean>(false);
 
   useEffect(() => {
     if (selectedChat?._id) {
@@ -40,16 +42,18 @@ const Conversation = () => {
 
   useEffect(() => {
     socket.on("message-received", (newMessage: any) => {
-      console.log("hey");
       if (
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessage.chat._id
       ) {
-        console.log("give notification");
+        //console.log("give notification");
       } else {
         getAllMessagesByChatId(newMessage.chat._id);
       }
     });
+
+    socket.on("typing", () => setIsTyping(true));
+    socket.on("stop-typing", () => setIsTyping(false));
   }, [socket]);
 
   const sendNewMessage = async () => {
@@ -59,6 +63,7 @@ const Conversation = () => {
     });
     setNewMessage("");
     socket.emit("new-message", data);
+    socket.emit("stop-typing", selectedChat?._id);
   };
   const getChatName = (chat: Chat | undefined) => {
     if (chat?.isGroupChat) {
@@ -70,6 +75,27 @@ const Conversation = () => {
   };
   const isSender = (message: Message): boolean => {
     return currentUser?._id === message.sender._id;
+  };
+  const typingHandler = (e: any) => {
+    if (e.key == "Enter" && newMessage) {
+      sendNewMessage();
+    }
+
+    if (!socketConnected) return;
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", selectedChat?._id);
+    }
+    let lastTypingTime: number = new Date().getTime();
+    const timerLength: number = 3000;
+    setTimeout(() => {
+      let timeNow: number = new Date().getTime();
+      let timeDifference: number = timeNow - lastTypingTime;
+      if (timeDifference >= timerLength && typing) {
+        socket.emit("stop-typing", selectedChat?._id);
+        setTyping(false);
+      }
+    }, 3000);
   };
 
   return (
@@ -109,12 +135,14 @@ const Conversation = () => {
                   </div>
                 ))}
               </div>
+              {isTyping ? <div>typing . . .</div> : null}
               <div className="d-flex mt-3 chat-input">
                 <Form.Control
                   type="email"
                   placeholder="Enter Message"
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
+                  onKeyDown={(e) => typingHandler(e)}
                 />
                 <Button
                   variant="primary"
