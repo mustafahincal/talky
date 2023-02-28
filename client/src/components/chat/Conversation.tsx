@@ -5,6 +5,7 @@ import { useAuthContext } from "../../contexts/AuthContext";
 import { useChatContext } from "../../contexts/ChatContext";
 import { Chat } from "../../types/chat";
 import { Message } from "../../types/message";
+import styles from "./styles.module.css";
 
 const ENDPOINT = "http://localhost:4000";
 let socket: any, selectedChatCompare: Chat;
@@ -87,7 +88,7 @@ const Conversation = () => {
               <div className="d-flex flex-column  overflow-auto chat-messages">
                 {messages.map((message, index) => (
                   <div
-                    className={` mb-2 d-flex align-items-center gap-2 ${
+                    className={`mb-2 d-flex align-items-center gap-2 ${
                       isSender(message) && "justify-content-end"
                     }`}
                     key={index}
@@ -98,7 +99,11 @@ const Conversation = () => {
                       width={"30px"}
                       height={"30px"}
                     />
-                    <span className="bg-white p-1 rounded align-self-start">
+                    <span
+                      className={`${styles.message} ${
+                        isSender(message) ? "bg-success" : "bg-info"
+                      }`}
+                    >
                       {message.content}
                     </span>
                   </div>
