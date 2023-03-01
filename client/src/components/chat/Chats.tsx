@@ -37,8 +37,8 @@ const Chats = () => {
 
   return (
     <div
-      className="rounded h-100 d-flex flex-column gap-3 p-3"
-      style={{ background: "#89C4E1" }}
+      className="rounded h-100 d-flex flex-column gap-3 p-3 border border-dark"
+      style={{ background: "#fff" }}
     >
       {chats.length > 0 ? (
         chats.map((chat) => (
@@ -47,7 +47,7 @@ const Chats = () => {
             className={` py-2 px-3 rounded cursor-pointer d-flex align-items-center gap-3 ${
               selectedChat?._id === chat._id && "bg-dark text-light"
             }`}
-            style={{ background: "#CAF0F8" }}
+            style={{ background: "#EEEEEE" }}
             key={chat._id}
           >
             <img

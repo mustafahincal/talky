@@ -1,6 +1,6 @@
+import { Container, Tab, Tabs } from "react-bootstrap";
 import Login from "../../components/authentication/Login";
 import SignUp from "../../components/authentication/SignUp";
-import { Button, Container, Tab, Tabs } from "react-bootstrap";
 
 const HomePage = () => {
   return (
@@ -8,7 +8,7 @@ const HomePage = () => {
       className="d-flex justify-content-center align-items-center"
       style={{ height: "100vh" }}
     >
-      <Container className="w-25 bg-light p-3">
+      <Container className="w-25 bg-light p-3 border border-dark">
         <Tabs
           defaultActiveKey="profile"
           id="fill-tab-example"

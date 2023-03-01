@@ -124,11 +124,15 @@ const Conversation = () => {
   };
 
   return (
-    <div className="rounded h-100 p-3 " style={{ background: "#89C4E1" }}>
+    <div
+      className="rounded h-100 p-3 border border-dark
+      "
+      style={{ background: "#fff" }}
+    >
       <div
         key={selectedChat?._id}
         className="h-100 w-100 p-4 d-flex flex-column "
-        style={{ background: "#CAF0F8" }}
+        style={{ background: "#EEEEEE" }}
       >
         <h2 className="px-1 py-2 mb-4 bg-dark text-white d-flex justify-content-center align-items-center">
           {getChatName(selectedChat) || "Select a Chat"}

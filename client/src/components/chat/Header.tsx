@@ -34,7 +34,12 @@ const Header = () => {
 
   return (
     <>
-      <Navbar key={"sm"} bg="light" expand={"sm"} className="mb-3">
+      <Navbar
+        key={"sm"}
+        bg="light"
+        expand={"sm"}
+        className="mb-3 border border-dark bg-white"
+      >
         <Container>
           <Navbar.Brand href="#" style={{ fontSize: "30px" }}>
             Talky
