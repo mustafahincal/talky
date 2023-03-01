@@ -19,12 +19,19 @@ const Chats = () => {
     const user = chat.users.find((user) => user._id != currentUser?._id);
     return user?.name;
   };
+  const getChatImage = (chat: Chat) => {
+    if (chat.isGroupChat) {
+      return chat.chatName;
+    }
+    const user = chat.users.find((user) => user._id != currentUser?._id);
+    return user?.image;
+  };
 
   const getLastMessageSender = (chat: Chat) => {
     const userId: any = chat.latestMessage?.sender;
     if (chat.latestMessage) {
       const user = chat.users.find((user) => user._id == userId);
-      return user?.name;
+      return user?.name.split(" ")[0];
     }
   };
 
@@ -44,14 +51,14 @@ const Chats = () => {
             key={chat._id}
           >
             <img
-              src={`${process.env.REACT_APP_PUBLIC}${currentUser?.image}`}
+              src={`${process.env.REACT_APP_PUBLIC}${getChatImage(chat)}`}
               alt=""
               width={"50px"}
               height={"50px"}
               className="rounded-circle border border-light"
             />
             <div className="d-flex flex-column">
-              <span style={{ fontSize: "20px" }}>{getChatName(chat)}</span>
+              <span style={{ fontSize: "17px" }}>{getChatName(chat)}</span>
               {chat.latestMessage ? (
                 <div style={{ fontSize: "13px" }} className="d-flex gap-1">
                   <span>{getLastMessageSender(chat) + "  :"} </span>

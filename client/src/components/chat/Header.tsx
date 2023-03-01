@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
+  Button,
   Container,
   Nav,
   Navbar,
   NavDropdown,
   Offcanvas,
-  Form,
-  Button,
 } from "react-bootstrap";
+import chatSvg from "../../assets/chat.svg";
 import logoutIcon from "../../assets/logout.svg";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { useChatContext } from "../../contexts/ChatContext";
 import { useUserContext } from "../../contexts/UserContext";
 import styles from "./styles.module.css";
-import chatSvg from "../../assets/chat.svg";
-import { useChatContext } from "../../contexts/ChatContext";
 
 const Header = () => {
   const { logout, currentUser } = useAuthContext();
@@ -37,7 +36,9 @@ const Header = () => {
     <>
       <Navbar key={"sm"} bg="light" expand={"sm"} className="mb-3">
         <Container>
-          <Navbar.Brand href="#">Chat App</Navbar.Brand>
+          <Navbar.Brand href="#" style={{ fontSize: "30px" }}>
+            Talky
+          </Navbar.Brand>
           <div className="mx-3 bg-danger d-flex align-items-center gap-2  py-2 px-2 rounded text-white">
             <img
               src={`${process.env.REACT_APP_PUBLIC}${currentUser?.image}`}
