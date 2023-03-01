@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import Lottie from "react-lottie";
 import { io } from "socket.io-client";
+import animationData from "../../assets/typing.json";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useChatContext } from "../../contexts/ChatContext";
 import { Chat } from "../../types/chat";
@@ -25,6 +27,17 @@ const Conversation = () => {
   const [typing, setTyping] = useState<boolean>(false);
   const [isTyping, setIsTyping] = useState<boolean>(false);
 
+  const messageElement: any = useRef();
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
   useEffect(() => {
     if (selectedChat?._id) {
       getAllMessagesByChatId(selectedChat._id);
@@ -39,6 +52,18 @@ const Conversation = () => {
     socket.emit("setup", currentUser);
     socket.on("connected", () => setSocketConnected(true));
   }, []);
+
+  useEffect(() => {
+    if (messageElement.current) {
+      messageElement.current.addEventListener(
+        "DOMNodeInserted",
+        (event: any) => {
+          const { currentTarget: target } = event;
+          target.scroll({ top: target.scrollHeight, behavior: "smooth" });
+        }
+      );
+    }
+  }, [selectedChat]);
 
   useEffect(() => {
     socket.on("message-received", (newMessage: any) => {
@@ -111,7 +136,10 @@ const Conversation = () => {
         <div className="chat-container">
           {selectedChat ? (
             <div className="d-flex flex-column justify-content-between w-100">
-              <div className="d-flex flex-column  overflow-auto chat-messages">
+              <div
+                className="d-flex flex-column overflow-auto chat-messages"
+                ref={messageElement}
+              >
                 {messages.map((message, index) => (
                   <div
                     className={`mb-2 d-flex align-items-center flex-row gap-2 ${
@@ -138,7 +166,20 @@ const Conversation = () => {
                   </div>
                 ))}
               </div>
-              {isTyping ? <div>typing . . .</div> : null}
+              <div
+                style={{
+                  height: "20px",
+                }}
+              >
+                {isTyping ? (
+                  <Lottie
+                    options={defaultOptions}
+                    style={{ display: "inline-block", marginLeft: "10px" }}
+                    width={50}
+                    height={30}
+                  />
+                ) : null}
+              </div>
               <div className="d-flex mt-3 chat-input">
                 <Form.Control
                   type="email"
