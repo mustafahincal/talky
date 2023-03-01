@@ -6,6 +6,7 @@ export type Chat = {
   users: User[];
   _id: string;
   chatName: string;
+  latestMessage?: Message;
 };
 
 export type ChatContextType = {

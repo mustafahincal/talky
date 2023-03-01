@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
-import { Container } from "react-bootstrap";
+import { useEffect } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useChatContext } from "../../contexts/ChatContext";
 import { Chat } from "../../types/chat";
 
 const Chats = () => {
-  const { chats, getAllChats, setSelectedChat, selectedChat } =
+  const { chats, getAllChats, setSelectedChat, selectedChat, messages } =
     useChatContext();
   const { currentUser } = useAuthContext();
 
@@ -17,9 +16,16 @@ const Chats = () => {
     if (chat.isGroupChat) {
       return chat.chatName;
     }
-
     const user = chat.users.find((user) => user._id != currentUser?._id);
     return user?.name;
+  };
+
+  const getLastMessageSender = (chat: Chat) => {
+    const userId: any = chat.latestMessage?.sender;
+    if (chat.latestMessage) {
+      const user = chat.users.find((user) => user._id == userId);
+      return user?.name;
+    }
   };
 
   return (
@@ -31,13 +37,28 @@ const Chats = () => {
         chats.map((chat) => (
           <div
             onClick={() => setSelectedChat(chat)}
-            className={` p-3 rounded cursor-pointer ${
+            className={` py-2 px-3 rounded cursor-pointer d-flex align-items-center gap-3 ${
               selectedChat?._id === chat._id && "bg-dark text-light"
             }`}
             style={{ background: "#CAF0F8" }}
             key={chat._id}
           >
-            <span>{getChatName(chat)}</span>
+            <img
+              src={`${process.env.REACT_APP_PUBLIC}${currentUser?.image}`}
+              alt=""
+              width={"50px"}
+              height={"50px"}
+              className="rounded-circle border border-light"
+            />
+            <div className="d-flex flex-column">
+              <span style={{ fontSize: "20px" }}>{getChatName(chat)}</span>
+              {chat.latestMessage ? (
+                <div style={{ fontSize: "13px" }} className="d-flex gap-1">
+                  <span>{getLastMessageSender(chat) + "  :"} </span>
+                  <span>{chat.latestMessage?.content}</span>
+                </div>
+              ) : null}
+            </div>
           </div>
         ))
       ) : (
