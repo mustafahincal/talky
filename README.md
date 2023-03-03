@@ -5,7 +5,7 @@
 > Uses Socket.io for real time communication and stores user details in encrypted format in Mongo DB Database.
 
 
-## **Technologies and techniques used in the project (Projede kullanılan teknikler ve teknolojiler)**
+## **Technologies and techniques used in the project**
 
 ### **Frontend**
 
